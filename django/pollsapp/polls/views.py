@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from .models import Question
 from django.http import JsonResponse
 from django.utils import timezone
+from .tenant_manage import create_schema
 
 # Create your views here.
 
@@ -34,5 +35,10 @@ def insert(request):
     question = Question(question_text = text, pub_date=timezone.now())
     question.save()
     return JsonResponse(question.question_text, safe=False)
+
+def create(request):
+    create_schema()
+    response = {"created"}
+    return HttpResponse(response)
 
 
