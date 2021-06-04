@@ -1,4 +1,5 @@
 import random
+import json
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -14,13 +15,19 @@ TENANT_SCHEMA = "tenant67"
 def index(request):
     connect_to_schema(TENANT_SCHEMA)
     latest_questions_list = Question.objects.order_by('pub_date')[:5]
-    response = []
+    questions = []
     # send question text as response
     for q in latest_questions_list:
         key_value = {}
         key_value['question'] = q.question_text
         key_value['date'] = q.pub_date
-        response.append(key_value)
+        questions.append(key_value)
+
+    response_object = {"tenant_info" : {
+        "schema": TENANT_SCHEMA
+    },
+    "questions" : questions}
+    response =  json.dumps(response_object, sort_keys=True, default=str)
     return JsonResponse(response, safe=False)
 
 def detail(request,question_id):
