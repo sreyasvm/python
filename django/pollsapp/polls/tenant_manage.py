@@ -28,8 +28,12 @@ def create_schema():
 
 def connect_to_schema(schema):
     from django.db import connection
-    
+
     with connection.cursor() as cursor:
-        if(schema is not None):
+        cursor.execute("select schema_name from information_schema.schemata")
+        rows = cursor.fetchall()
+        available_schemas = [row[0] for row in rows]
+        if(schema is not None and schema in available_schemas):
+            print("connecting to schema" + schema)
             cursor.execute(f"SET search_path to {schema}")
             print("connected to schema " + schema)
