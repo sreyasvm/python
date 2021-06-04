@@ -19,6 +19,8 @@ def create_schema():
 
     with connection.cursor() as cursor:
         schema  = "tenant" + str(random.randrange(100))
-        cursor.execute(f"CREATE TABLE IF NOT EXISTS contacts(contact_id INTEGER PRIMARY KEY,first_name TEXT NOT NULL)")
+        # cursor.execute(f"CREATE TABLE IF NOT EXISTS contacts(contact_id INTEGER PRIMARY KEY,first_name TEXT NOT NULL)")
+        cursor.execute(f"CREATE SCHEMA IF NOT EXISTS {schema}")
+        cursor.execute(f"SET search_path to {schema}")
         execute_from_command_line(["manage.py", "migrate"])
         print("migrated")
