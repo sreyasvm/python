@@ -24,3 +24,12 @@ def create_schema():
         cursor.execute(f"SET search_path to {schema}")
         execute_from_command_line(["manage.py", "migrate"])
         print("migrated")
+
+
+def connect_to_schema(schema):
+    from django.db import connection
+    
+    with connection.cursor() as cursor:
+        if(schema is not None):
+            cursor.execute(f"SET search_path to {schema}")
+            print("connected to schema " + schema)

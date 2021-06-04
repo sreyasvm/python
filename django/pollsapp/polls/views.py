@@ -5,11 +5,13 @@ from django.http import HttpResponse
 from .models import Question
 from django.http import JsonResponse
 from django.utils import timezone
-from .tenant_manage import create_schema
+from .tenant_manage import create_schema,connect_to_schema
 
 # Create your views here.
 
 def index(request):
+    schema = "tenant67"
+    connect_to_schema(schema)
     latest_questions_list = Question.objects.order_by('pub_date')[:5]
     response = []
     # send question text as response
@@ -31,6 +33,8 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 def insert(request):
+    schema = "tenant67"
+    connect_to_schema(schema)
     text = "Bazinga " + str(random.randrange(100)) + " ?"
     question = Question(question_text = text, pub_date=timezone.now())
     question.save()
