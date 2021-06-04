@@ -35,9 +35,9 @@ def tenant_index(request,tenant_id):
                 },
             "questions" : questions
             }
-        response =  json.dumps(response_object, sort_keys=True, default=str)
-        return JsonResponse(response, safe=False)
-    except Exception:
+        return JsonResponse(response_object,safe=False)
+    except Exception as ex:
+        print(ex)
         return HttpResponse("Invalid Tenant")
 
 
@@ -62,7 +62,8 @@ def onboard(request):
     schema = create_schema()
     response = {
         "created" : schema,
-        "url" : "http://localhost:8000/polls/" + schema}
+        "url" : "http://localhost:8000/polls/" + schema
+    }
     return JsonResponse(response)
 
 
