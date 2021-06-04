@@ -58,7 +58,7 @@ def insert_for_tenant(request,tenant_id):
     except Exception:
         return HttpResponse("Invalid Tenant")
 
-def create(request):
+def onboard(request):
     schema = create_schema()
     response = {
         "created" : schema,
