@@ -6,7 +6,8 @@ from django.http import HttpResponse
 from .models import Question
 from django.http import JsonResponse
 from django.utils import timezone
-from .tenant_manage import create_schema,connect_to_schema
+from .tenant_manage import onboard_tenant,connect_to_schema
+from tenant_independent.views import insert_library_details
 
 # Create your views here.
 
@@ -61,11 +62,15 @@ def insert_for_tenant(request,tenant_id):
         return JsonResponse({"error" : "Invalid tenant"})
 
 def onboard(request):
-    schema = create_schema()
-    response = {
-        "created" : schema,
-        "url" : "http://localhost:8000/polls/" + schema
-    }
-    return JsonResponse(response)
+    try:
+        schema = onboard_tenant()
+        response = {
+            "created" : schema,
+            "url" : "http://localhost:8000/polls/" + schema
+        }
+        return JsonResponse(response)
+    except Exception as ex:
+        print(ex)
+        return JsonResponse({"error" : "Schema with the same name already exists.. Please try again"})
 
 
