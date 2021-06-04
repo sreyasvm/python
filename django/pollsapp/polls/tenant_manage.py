@@ -38,3 +38,5 @@ def connect_to_schema(schema):
             print("connecting to schema:" + schema)
             cursor.execute(f"SET search_path to {schema}")
             print("connected to schema:" + schema)
+        else:
+            raise Exception("Invalid Schema")
