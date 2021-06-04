@@ -9,9 +9,10 @@ from .tenant_manage import create_schema,connect_to_schema
 
 # Create your views here.
 
+TENANT_SCHEMA = "tenant67"
+
 def index(request):
-    schema = "tenant67"
-    connect_to_schema(schema)
+    connect_to_schema(TENANT_SCHEMA)
     latest_questions_list = Question.objects.order_by('pub_date')[:5]
     response = []
     # send question text as response
@@ -33,8 +34,7 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 def insert(request):
-    schema = "tenant67"
-    connect_to_schema(schema)
+    connect_to_schema(TENANT_SCHEMA)
     text = "Bazinga " + str(random.randrange(100)) + " ?"
     question = Question(question_text = text, pub_date=timezone.now())
     question.save()
