@@ -34,6 +34,6 @@ def connect_to_schema(schema):
         rows = cursor.fetchall()
         available_schemas = [row[0] for row in rows]
         if(schema is not None and schema in available_schemas):
-            print("connecting to schema" + schema)
+            print("connecting to schema:" + schema)
             cursor.execute(f"SET search_path to {schema}")
-            print("connected to schema " + schema)
+            print("connected to schema:" + schema)
