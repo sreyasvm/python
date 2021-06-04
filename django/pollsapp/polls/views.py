@@ -41,8 +41,8 @@ def insert(request):
     return JsonResponse(question.question_text, safe=False)
 
 def create(request):
-    create_schema()
-    response = {"created"}
-    return HttpResponse(response)
+    schema = create_schema()
+    response = {"created" : schema}
+    return JsonResponse(response)
 
 

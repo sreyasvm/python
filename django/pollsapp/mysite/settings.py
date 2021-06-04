@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tenant_independent.apps.TenantIndependentConfig',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,7 +77,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
         'default': {
-
+            
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
         'NAME': 'postgres',
