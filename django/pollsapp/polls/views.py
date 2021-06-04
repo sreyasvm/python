@@ -11,7 +11,7 @@ from .tenant_manage import create_schema,connect_to_schema
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Provide the valid tenant id in the url -> polls/{tenantId}")
+    return JsonResponse({"error" : "Provide the valid tenant id in the url -> polls/{tenantId}"})
 
 def detail(request,question_id):
     return HttpResponse("You're looking at question %s." % question_id)
@@ -38,7 +38,9 @@ def tenant_index(request,tenant_id):
         return JsonResponse(response_object,safe=False)
     except Exception as ex:
         print(ex)
-        return HttpResponse("Invalid Tenant")
+        return JsonResponse({
+            "error" : "Invalid tenant"
+        })
 
 
 def results(request,question_id):
@@ -56,7 +58,7 @@ def insert_for_tenant(request,tenant_id):
         question.save()
         return JsonResponse(question.question_text, safe=False)
     except Exception:
-        return HttpResponse("Invalid Tenant")
+        return JsonResponse({"error" : "Invalid tenant"})
 
 def onboard(request):
     schema = create_schema()
